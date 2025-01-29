@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "CommonJS",
-    "jsx": "react-jsx",
+    "types": ["@testing-library/jest-dom"],
+    "target": "es6",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "jsx": "react",
     "strict": true,
-    "moduleResolution": "node",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "types": ["jest"]
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "declaration": true
   },
-  "include": ["src", "webpack.config.ts"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

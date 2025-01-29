@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+:root {
+  --font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+
+  --font-color-prime: #1976d2;
+  --error-color: #d32f2f;
+  --font-color-disabled: rgba(0, 0, 0, 0.26);
+
+  --background-color-prime: #1976d2;
+  --background-color-prime-hover: #1364b4;
+  --background-color-text-hover: #f7fafc;
+  --background-color-contained-disabled: rgba(0, 0, 0, 0.12);
+
+  --border-color-outlined: rgba(25, 118, 210, 0.5);
+  --border-color-disabled: rgba(0, 0, 0, 0.12);
+}
