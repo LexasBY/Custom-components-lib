@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./Button.module.css";
-console.log(styles);
 
 type Variant = "text" | "contained" | "outlined";
 type Size = "small" | "medium" | "large";
@@ -10,6 +9,7 @@ export interface ButtonProps {
   size?: Size;
   disabled?: boolean;
   onClick?: () => void;
+  type?: "button" | "submit" | "reset";
   children?: React.ReactNode;
 }
 
@@ -18,18 +18,18 @@ function Button({
   size = "medium",
   disabled = false,
   onClick = () => {},
-  children,
+  type = "button",
 }: ButtonProps) {
-  const cssClasses = [styles.myButton, styles[variant], styles[size]];
-  if (disabled) cssClasses.push(styles.disabled);
+  const buttonText = size.toUpperCase();
+
   return (
     <button
-      className={cssClasses.join(" ")}
+      className={`${styles.myButton} ${styles[variant]} ${styles[size]} ${disabled ? styles.disabled : ""}`}
       onClick={onClick}
       disabled={disabled}
-      type="submit"
+      type={type}
     >
-      {children}
+      {buttonText}
     </button>
   );
 }
