@@ -1,44 +1,47 @@
 import path from "path";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import { Configuration } from "webpack";
 import "webpack-dev-server";
 
-const config: Configuration = {
-  entry: "./src/index.tsx",
+module.exports = {
+  entry: "./src/index.ts",
   output: {
+    filename: "index.js",
     path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
+    library: {
+      type: "umd",
+    },
     clean: true,
   },
+  mode: "production",
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".wasm", ".ts", ".tsx", ".mjs", ".cjs", ".js", ".json"],
+  },
+  externals: {
+    react: "react",
   },
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.css$/i,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              modules: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(ts|tsx)?$/,
         use: "ts-loader",
         exclude: /node_modules/,
       },
       {
-        test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        test: /\.svg$/,
+        use: ["@svgr/webpack"],
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "./index.html",
-    }),
-    new MiniCssExtractPlugin(),
-  ],
-  devServer: {
-    static: "./dist",
-    hot: true,
-    port: 3000,
-    open: true,
-  },
 };
-
-export default config;

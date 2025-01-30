@@ -1,0 +1,75 @@
+@import "../../global.css";
+
+.myButton {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  min-width: 64px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  color: var(--font-color-prime);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: 0.3s;
+}
+
+.myButton:disabled {
+  cursor: auto;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+.outlined {
+  border: 1px solid var(--border-color-outlined);
+}
+
+.outlined:disabled {
+  color: var(--font-color-disabled);
+  border-color: var(--font-color-disabled);
+}
+
+.outlined:hover {
+  background-color: var(--background-color-text-hover);
+}
+
+.contained {
+  color: #fff;
+  background-color: var(--background-color-prime);
+  box-shadow:
+    0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+
+.contained:disabled {
+  color: var(--font-color-disabled);
+  background-color: var(--background-color-contained-disabled);
+  border-color: var(--font-color-disabled);
+}
+
+.contained:hover {
+  background-color: var(--background-color-prime-hover);
+}
+
+.text:disabled {
+  color: var(--font-color-disabled);
+}
+
+.text:hover {
+  background-color: var(--background-color-text-hover);
+}
+
+.small {
+  font-size: 0.8125rem;
+  padding: 4px 10px;
+}
+
+.large {
+  font-size: 0.9375rem;
+  padding: 8px 22px;
+}

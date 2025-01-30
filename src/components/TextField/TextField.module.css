@@ -1,0 +1,38 @@
+@import "../../global.css";
+
+.textFieldContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.input {
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: var(--font-color-prime);
+  outline: none;
+}
+
+.error {
+  border-color: var(--error-color) !important;
+}
+
+.helperText {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.errorText {
+  color: var(--error-color) !important;
+}
