@@ -1,49 +1,62 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import TextField from "./TextField";
 
-const meta = {
+const meta: Meta<typeof TextField> = {
   title: "TextField",
   component: TextField,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
-  args: {
-    onChange: fn(),
-    placeholder: "Enter text...",
-    size: 20,
-  },
   argTypes: {
-    size: { control: "number" },
+    variant: { control: "radio", options: ["outlined", "filled", "standard"] },
+    disabled: { control: "boolean" },
     error: { control: "boolean" },
-    helperText: { control: "text" },
     label: { control: "text" },
+    helperText: { control: "text" },
+    onChange: { action: "changed" },
   },
-} satisfies Meta<typeof TextField>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Outlined: Story = {
   args: {
+    variant: "outlined",
+    disabled: false,
     label: "Name",
     helperText: "Enter your name",
+    id: "outlined-input",
   },
 };
 
-export const Error: Story = {
+export const Filled: Story = {
   args: {
-    label: "Email",
-    error: true,
-    helperText: "Invalid email format",
-  },
-};
-
-export const WithPlaceholder: Story = {
-  args: {
+    variant: "filled",
+    disabled: false,
     label: "Password",
-    placeholder: "Enter your password",
-    type: "password",
+    helperText: "Enter your password",
+    id: "filled-input",
+  },
+};
+
+export const Standard: Story = {
+  args: {
+    variant: "standard",
+    disabled: false,
+    label: "Email",
+    helperText: "Enter your email",
+    id: "standard-input",
+  },
+};
+
+export const ErrorState: Story = {
+  args: {
+    variant: "outlined",
+    error: true,
+    label: "Email",
+    helperText: "Invalid email format",
+    id: "error-input",
   },
 };

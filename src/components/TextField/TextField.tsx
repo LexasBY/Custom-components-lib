@@ -1,45 +1,93 @@
-import React from "react";
+import React, { forwardRef, useState } from "react";
 import styles from "./TextField.module.css";
 
-export interface TextFieldProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
+export type Variant = "outlined" | "filled" | "standard";
+
+export interface TextFieldProps {
+  variant?: Variant;
   error?: boolean;
+  label?: string;
+  disabled?: boolean;
+  select?: boolean;
+  selectedValue?: string;
+  id?: string;
+  onClick?: () => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   helperText?: string;
+  defaultValue?: string;
 }
 
-function TextField({
-  label,
-  error = false,
-  helperText,
-  className,
-  id,
-  ...props
-}: TextFieldProps) {
-  const inputId = id || `textfield-${Math.random().toString(36).substr(2, 9)}`;
+type Ref = HTMLInputElement;
+const TextField = forwardRef<Ref, TextFieldProps>(
+  (
+    {
+      variant = "outlined",
+      error = false,
+      label = "Outlined",
+      disabled = false,
+      select = false,
+      selectedValue,
+      id,
+      onClick,
+      onChange,
+      helperText,
+      defaultValue,
+    }: TextFieldProps,
+    ref,
+  ) => {
+    const [value, setValue] = useState(defaultValue || "");
+    const isControlled = selectedValue !== undefined;
 
-  return (
-    <div className={`${styles.textFieldContainer} ${className || ""}`}>
-      {label && (
-        <label htmlFor={inputId} className={styles.label}>
-          {label}
+    const inputClasses = [styles.input, styles[variant]];
+    const labelClasses = [styles.label];
+    if (disabled) inputClasses.push(styles.disabled);
+    if (variant === "standard") labelClasses.push(styles.standardLabel);
+    if (variant === "outlined") labelClasses.push(styles.outlinedLabel);
+    if (error) labelClasses.push(styles.errorLabel);
+    if (error) inputClasses.push(styles.errorInput);
+
+    return (
+      <div
+        data-testid="text-field"
+        className={styles.container}
+        onClick={onClick}
+      >
+        <label htmlFor={id} className={styles.wrapper}>
+          <input
+            ref={ref}
+            style={{ cursor: select ? "pointer" : "text" }}
+            className={inputClasses.join(" ")}
+            value={isControlled ? selectedValue : value}
+            onChange={
+              isControlled
+                ? undefined
+                : (e) => {
+                    setValue(e.target.value);
+                    onChange?.(e);
+                  }
+            }
+            type="text"
+            id={id}
+            placeholder={" "}
+            disabled={disabled}
+            data-testid="text-input"
+          />
+          <span data-testid="text-label" className={labelClasses.join(" ")}>
+            {label}
+          </span>
         </label>
-      )}
-      <input
-        id={inputId}
-        className={`${styles.input} ${error ? styles.error : ""}`}
-        aria-invalid={error}
-        {...props}
-      />
-      {helperText && (
-        <span
-          className={`${styles.helperText} ${error ? styles.errorText : ""}`}
-        >
-          {helperText}
-        </span>
-      )}
-    </div>
-  );
-}
+
+        {helperText && (
+          <span
+            className={`${styles.helperText} ${error ? styles.errorText : ""}`}
+            data-testid="text-helper"
+          >
+            {helperText}
+          </span>
+        )}
+      </div>
+    );
+  },
+);
 
 export default TextField;
