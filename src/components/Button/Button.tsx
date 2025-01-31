@@ -19,9 +19,10 @@ function Button({
   disabled = false,
   onClick = () => {},
   type = "button",
+  children,
 }: ButtonProps) {
-  const buttonText = size.toUpperCase();
-
+  const buttonText =
+    React.Children.count(children) > 0 ? children : size.toUpperCase();
   return (
     <button
       className={`${styles.myButton} ${styles[variant]} ${styles[size]} ${disabled ? styles.disabled : ""}`}

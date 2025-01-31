@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import Button from "./Button";
+import React from "react";
 
 const meta = {
   title: "Button",
@@ -9,7 +10,28 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  args: { onClick: fn() },
+  args: {
+    onClick: fn(),
+    size: "medium",
+    variant: "outlined",
+  },
+  argTypes: {
+    size: { control: "radio", options: ["small", "medium", "large"] },
+    variant: { control: "radio", options: ["text", "contained", "outlined"] },
+    children: { control: "text" },
+  },
+  decorators: [
+    (Story, context) => {
+      const { size, children } = context.args;
+      const computedSize = size ?? "medium";
+      const computedChildren =
+        !children || (typeof children === "string" && children.trim() === "")
+          ? computedSize.toUpperCase()
+          : children;
+
+      return <Story args={{ ...context.args, children: computedChildren }} />;
+    },
+  ],
 } satisfies Meta<typeof Button>;
 
 export default meta;
