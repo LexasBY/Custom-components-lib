@@ -40,15 +40,6 @@ type Story = StoryObj<typeof meta>;
 export const Large: Story = {
   args: {
     size: "large",
-    children: "large",
-    variant: "outlined",
-  },
-};
-
-export const Small: Story = {
-  args: {
-    size: "small",
-    children: "small",
     variant: "outlined",
   },
 };
@@ -56,7 +47,13 @@ export const Small: Story = {
 export const Medium: Story = {
   args: {
     size: "medium",
-    children: "medium",
+    variant: "outlined",
+  },
+};
+
+export const Small: Story = {
+  args: {
+    size: "small",
     variant: "outlined",
   },
 };

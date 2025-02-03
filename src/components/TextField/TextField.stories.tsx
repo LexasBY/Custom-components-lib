@@ -1,49 +1,77 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import TextField from "./TextField";
 
-const meta = {
+const meta: Meta<typeof TextField> = {
   title: "TextField",
   component: TextField,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
-  args: {
-    onChange: fn(),
-    placeholder: "Enter text...",
-    size: 20,
-  },
   argTypes: {
-    size: { control: "number" },
+    variant: {
+      control: "radio",
+      options: ["outlined", "filled", "standard"],
+    },
+    disabled: { control: "boolean" },
     error: { control: "boolean" },
-    helperText: { control: "text" },
+    onChange: { action: "changed" },
     label: { control: "text" },
   },
-} satisfies Meta<typeof TextField>;
+  decorators: [
+    (Story, context) => {
+      const variantLabel = context.args.variant
+        ? context.args.variant.charAt(0).toUpperCase() +
+          context.args.variant.slice(1)
+        : "TextField";
+      return (
+        <Story
+          args={{
+            ...context.args,
+            label: variantLabel,
+          }}
+        />
+      );
+    },
+  ],
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Outlined: Story = {
   args: {
-    label: "Name",
-    helperText: "Enter your name",
+    variant: "outlined",
+    disabled: false,
+    label: "Outlined",
+    id: "outlined-input",
   },
 };
 
-export const Error: Story = {
+export const Filled: Story = {
   args: {
-    label: "Email",
+    variant: "filled",
+    disabled: false,
+    label: "Filled",
+    id: "filled-input",
+  },
+};
+
+export const Standard: Story = {
+  args: {
+    variant: "standard",
+    disabled: false,
+    label: "Standard",
+    id: "standard-input",
+  },
+};
+
+export const ErrorState: Story = {
+  args: {
+    variant: "outlined",
     error: true,
-    helperText: "Invalid email format",
-  },
-};
-
-export const WithPlaceholder: Story = {
-  args: {
-    label: "Password",
-    placeholder: "Enter your password",
-    type: "password",
+    label: "Outlined",
+    id: "error-input",
   },
 };

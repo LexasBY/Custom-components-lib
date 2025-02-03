@@ -9,7 +9,6 @@ export interface ButtonProps {
   size?: Size;
   disabled?: boolean;
   onClick?: () => void;
-  type?: "button" | "submit" | "reset";
   children?: React.ReactNode;
 }
 
@@ -18,7 +17,6 @@ function Button({
   size = "medium",
   disabled = false,
   onClick = () => {},
-  type = "button",
   children,
 }: ButtonProps) {
   const buttonText =
@@ -28,7 +26,6 @@ function Button({
       className={`${styles.myButton} ${styles[variant]} ${styles[size]} ${disabled ? styles.disabled : ""}`}
       onClick={onClick}
       disabled={disabled}
-      type={type}
     >
       {buttonText}
     </button>
