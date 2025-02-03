@@ -1,13 +1,11 @@
 @import "../../global.css";
 
-/* === Контейнер === */
 .container {
   display: inline-block;
   padding: 10px;
   width: 100%;
 }
 
-/* === Обертка для input и label === */
 .wrapper {
   font-family: var(--font-family);
   font-weight: 400;
@@ -31,7 +29,6 @@
   pointer-events: none;
   transform: translateY(-50%);
   z-index: 1;
-  background-color: transparent;
   padding: 0 4px;
 }
 
@@ -49,17 +46,7 @@
   outline: none;
 }
 
-/* === Поднимаем label при фокусе или когда есть значение === */
-.wrapper:focus-within .label,
-.input:not(:placeholder-shown) + .label {
-  color: rgb(25, 118, 210);
-  transform: translateY(-40px) scale(0.75);
-  background-color: white;
-  z-index: 2;
-  padding: 0 6px;
-}
-
-/* === Filled (Исправлено) === */
+/* === FILLED === */
 .filled {
   position: relative;
   background: rgba(0, 0, 0, 0.06);
@@ -70,20 +57,19 @@
   align-items: flex-end;
 }
 
-/* === Поднимаем label у filled === */
-.filled:focus-within .label,
-.filled input:not(:placeholder-shown) + .label {
-  transform: translateY(-36px) scale(0.75);
+/* === Поднимаем label у FILLED === */
+.filled:focus-within + .label,
+.filled:not(:placeholder-shown) ~ .label {
+  transform: translateY(-25px) scale(0.75);
   color: rgb(25, 118, 210);
 }
 
-/* === Граница в filled === */
 .filled:focus-within {
   background: rgba(0, 0, 0, 0.08);
   border-bottom: 2px solid rgb(25, 118, 210);
 }
 
-/* === Outlined (Исправлено) === */
+/* === OUTLINED === */
 .outlined {
   border: 1px solid rgba(0, 0, 0, 0.26);
   border-radius: 4px;
@@ -92,16 +78,15 @@
   background-color: white;
 }
 
-/* === Поднимаем label в outlined === */
-.outlined:focus-within .label,
-.outlined input:not(:placeholder-shown) + .label {
-  transform: translateY(-34px) scale(0.75);
-  padding: 0 6px;
+/* === Поднимаем label в OUTLINED === */
+.outlined:focus-within + .label,
+.outlined:not(:placeholder-shown) ~ .label {
+  transform: translateY(-37px) scale(0.75);
+  color: rgb(25, 118, 210);
   background-color: white;
-  z-index: 3;
+  z-index: 4;
 }
 
-/* === Граница в outlined === */
 .outlined:hover {
   border: 1px solid black;
 }
@@ -110,21 +95,20 @@
   border: 2px solid rgb(25, 118, 210);
 }
 
-/* === Standard (Исправлено) === */
+/* === STANDARD === */
 .standard {
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   padding: 16px 12px 0;
   outline: none;
 }
 
-/* === Поднимаем label у standard === */
-.standard:focus-within .label,
-.standard input:not(:placeholder-shown) + .label {
-  transform: translateY(-40px) scale(0.75);
+/* === Поднимаем label у STANDARD === */
+.standard:focus-within ~ .label,
+.standard:not(:placeholder-shown) ~ .label {
+  transform: translateY(-25px) scale(0.75);
   color: rgb(25, 118, 210);
 }
 
-/* === Граница в standard === */
 .standard:hover {
   border-bottom: 1px solid black;
 }
@@ -133,13 +117,24 @@
   border-bottom: 2px solid rgb(25, 118, 210);
 }
 
-/* === Ошибки === */
-.error .input {
-  border-color: var(--error-color);
+.error {
+  color: var(--error-color);
 }
 
-.error .label {
+.error:focus-within ~ .label,
+.error:not(:placeholder-shown) ~ .label {
   color: var(--error-color);
+}
+.filled.error {
+  border-bottom: 2px solid var(--error-color);
+}
+
+.outlined.error {
+  border: 2px solid var(--error-color);
+}
+
+.standard.error {
+  border-bottom: 2px solid var(--error-color);
 }
 
 .input:disabled:hover {

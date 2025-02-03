@@ -13,7 +13,6 @@ export interface TextFieldProps {
   id?: string;
   onClick?: () => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  helperText?: string;
   defaultValue?: string;
 }
 
@@ -30,7 +29,6 @@ const TextField = forwardRef<Ref, TextFieldProps>(
       id,
       onClick,
       onChange,
-      helperText,
       defaultValue,
     }: TextFieldProps,
     ref,
@@ -41,10 +39,8 @@ const TextField = forwardRef<Ref, TextFieldProps>(
     const inputClasses = [styles.input, styles[variant]];
     const labelClasses = [styles.label];
     if (disabled) inputClasses.push(styles.disabled);
-    if (variant === "standard") labelClasses.push(styles.standardLabel);
-    if (variant === "outlined") labelClasses.push(styles.outlinedLabel);
-    if (error) labelClasses.push(styles.errorLabel);
-    if (error) inputClasses.push(styles.errorInput);
+    if (error) labelClasses.push(styles.error);
+    if (error) inputClasses.push(styles.error);
 
     return (
       <div
@@ -76,15 +72,6 @@ const TextField = forwardRef<Ref, TextFieldProps>(
             {label}
           </span>
         </label>
-
-        {helperText && (
-          <span
-            className={`${styles.helperText} ${error ? styles.errorText : ""}`}
-            data-testid="text-helper"
-          >
-            {helperText}
-          </span>
-        )}
       </div>
     );
   },

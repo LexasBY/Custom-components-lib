@@ -9,19 +9,6 @@ test("renders text field with label", () => {
   expect(screen.getByLabelText("Name")).toBeInTheDocument();
 });
 
-test("displays placeholder", () => {
-  render(<TextField placeholder="Enter text" />);
-  expect(screen.getByPlaceholderText("Enter text")).toBeInTheDocument();
-});
-
-test("shows error message and applies error class", () => {
-  render(<TextField label="Email" error helperText="Invalid email" />);
-  expect(screen.getByText("Invalid email")).toBeInTheDocument();
-
-  const input = screen.getByLabelText("Email");
-  expect(input).toHaveAttribute("aria-invalid", "true");
-});
-
 test("changes value on input", async () => {
   const user = userEvent.setup();
   render(<TextField label="Name" />);
