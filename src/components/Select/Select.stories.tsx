@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import CustomSelect from "./Select";
 
@@ -30,5 +31,20 @@ export const Default: Story = {
     label: "Age",
     options,
     value: "",
+    onChange: (val) => console.log("Selected value:", val),
+  },
+  render: (args) => {
+    const [selectedValue, setSelectedValue] = useState(args.value);
+
+    return (
+      <CustomSelect
+        {...args}
+        value={selectedValue}
+        onChange={(value) => {
+          console.log("Selected value:", value);
+          setSelectedValue(value);
+        }}
+      />
+    );
   },
 };

@@ -16,9 +16,9 @@ interface SelectProps {
 
 const CustomSelect: React.FC<SelectProps> = ({
   label,
-  options,
+  options = [],
   value: controlledValue,
-  onChange,
+  onChange = () => {},
 }) => {
   const [open, setOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({
@@ -33,6 +33,7 @@ const CustomSelect: React.FC<SelectProps> = ({
   );
 
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (isControlled) {
@@ -64,7 +65,9 @@ const CustomSelect: React.FC<SelectProps> = ({
     const handleClickOutside = (event: MouseEvent) => {
       if (
         wrapperRef.current &&
-        !wrapperRef.current.contains(event.target as Node)
+        !wrapperRef.current.contains(event.target as Node) &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node)
       ) {
         setOpen(false);
       }
@@ -82,13 +85,15 @@ const CustomSelect: React.FC<SelectProps> = ({
         tabIndex={0}
       >
         <span
-          className={`${styles["custom-input-label"]} ${selectedValue ? styles.selected : ""}`}
+          className={`${styles["custom-input-label"]} ${
+            open || selectedValue !== "" ? styles.selected : ""
+          }`}
         >
           {label}
         </span>
         <span className={styles["custom-select-value"]}>
-          {selectedValue
-            ? options.find((o) => o.value === selectedValue)?.label || ""
+          {selectedValue !== ""
+            ? options.find((o) => o.value === selectedValue)?.label
             : ""}
         </span>
         <span className={styles["custom-select-arrow"]}>▾</span>
@@ -96,6 +101,7 @@ const CustomSelect: React.FC<SelectProps> = ({
       {open &&
         ReactDOM.createPortal(
           <div
+            ref={menuRef}
             className={styles["custom-select-menu"]}
             style={{
               top: `${menuPosition.top}px`,
