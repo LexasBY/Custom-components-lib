@@ -1,0 +1,109 @@
+@import "../../global.css";
+
+.custom-select-container {
+  position: relative;
+  min-width: 120px;
+  min-height: 60px;
+  font-family: var(--font-family);
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.custom-select-control {
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+  padding: 12px;
+  cursor: pointer;
+  display: flex;
+  min-height: 32px;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  background-color: white;
+}
+.custom-select-control:hover {
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+.custom-select-control.active,
+.custom-select-control:focus-within {
+  border: 2px solid rgb(25, 118, 210);
+}
+
+.custom-input-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.custom-select-container.open .custom-input-label {
+  top: 8px;
+  font-size: 14px;
+  color: rgb(25, 118, 210);
+  background-color: white;
+  transform: translateY(-18px) scale(0.75);
+}
+
+.custom-input-label.selected {
+  top: 8px;
+  font-size: 14px;
+  color: rgb(25, 118, 210);
+  background-color: white;
+  transform: translateY(-18px) scale(0.75);
+}
+
+.custom-select-value {
+  flex: 1;
+  text-align: left;
+}
+
+.custom-select-arrow {
+  margin-left: auto;
+  transition: transform 0.2s ease;
+}
+
+.custom-select-container.open .custom-select-arrow {
+  transform: rotate(180deg);
+}
+
+.custom-select-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  background: #fff;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 9999;
+  border-radius: 4px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  font-family: var(--font-family);
+}
+
+.custom-menu-item {
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.custom-menu-item:hover,
+.custom-menu-item.selected {
+  background: rgba(25, 118, 210, 0.1);
+}
+
+.custom-select-container.error .custom-select-control {
+  border: 2px solid var(--error-color);
+}
+
+.custom-select-container.error .custom-input-label {
+  color: var(--error-color);
+}
