@@ -75,4 +75,16 @@ describe("CustomSelect Component", () => {
 
     expect(screen.getByText("Age")).toHaveClass("selected");
   });
+
+  test("does not open dropdown when disabled", () => {
+    render(<CustomSelect label="Age" options={options} disabled />);
+    fireEvent.click(screen.getByText("Age"));
+    expect(screen.queryByText("Ten")).not.toBeInTheDocument();
+  });
+
+  test("applies error styling", () => {
+    render(<CustomSelect label="Age" options={options} error />);
+    const select = screen.getByText("Age");
+    expect(select.parentElement).toHaveClass("error");
+  });
 });

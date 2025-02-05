@@ -12,6 +12,8 @@ interface SelectProps {
   options: Option[];
   value?: string | number;
   onChange?: (value: string | number) => void;
+  error?: boolean;
+  disabled?: boolean;
 }
 
 const CustomSelect: React.FC<SelectProps> = ({
@@ -19,6 +21,8 @@ const CustomSelect: React.FC<SelectProps> = ({
   options = [],
   value: controlledValue,
   onChange = () => {},
+  disabled = false,
+  error = false,
 }) => {
   const [open, setOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({
@@ -42,6 +46,7 @@ const CustomSelect: React.FC<SelectProps> = ({
   }, [controlledValue]);
 
   const toggleOpen = () => {
+    if (disabled) return;
     if (!open && wrapperRef.current) {
       const rect = wrapperRef.current.getBoundingClientRect();
       setMenuPosition({
@@ -78,11 +83,20 @@ const CustomSelect: React.FC<SelectProps> = ({
   }, []);
 
   return (
-    <div className={styles["custom-select-container"]} ref={wrapperRef}>
+    <div
+      className={`${styles["custom-select-container"]} ${
+        disabled ? styles.disabled : ""
+      } ${error ? styles.error : ""}`}
+      ref={wrapperRef}
+    >
       <div
-        className={`${styles["custom-select-control"]} ${open ? styles.active : ""}`}
+        className={`${styles["custom-select-control"]} 
+          ${open ? styles.active : ""} 
+          ${disabled ? styles.disabled : ""} 
+          ${error ? styles.error : ""}`}
         onClick={toggleOpen}
-        tabIndex={0}
+        tabIndex={disabled ? -1 : 0}
+        aria-disabled={disabled}
       >
         <span
           className={`${styles["custom-input-label"]} ${

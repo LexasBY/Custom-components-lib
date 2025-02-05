@@ -24,9 +24,11 @@
     box-shadow 0.2s ease;
   background-color: white;
 }
+
 .custom-select-control:hover {
   border: 1px solid rgba(0, 0, 0, 0.6);
 }
+
 .custom-select-control.active,
 .custom-select-control:focus-within {
   border: 2px solid rgb(25, 118, 210);
@@ -42,20 +44,17 @@
   transition: all 0.2s ease;
 }
 
-.custom-select-container.open .custom-input-label {
-  top: 8px;
-  font-size: 14px;
-  color: rgb(25, 118, 210);
-  background-color: white;
-  transform: translateY(-18px) scale(0.75);
-}
-
+.custom-select-container.open .custom-input-label,
 .custom-input-label.selected {
   top: 8px;
-  font-size: 14px;
+  font-size: 16px;
   color: rgb(25, 118, 210);
   background-color: white;
-  transform: translateY(-18px) scale(0.75);
+  transform: translateY(-18px) translateX(-10px) scale(0.75);
+  padding: 0 5px;
+  display: inline-block;
+  width: auto;
+  white-space: nowrap;
 }
 
 .custom-select-value {
@@ -105,4 +104,19 @@
 
 .custom-select-container.error .custom-input-label {
   color: var(--error-color);
+}
+
+.custom-select-container.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.custom-select-container.disabled .custom-select-control {
+  background: #f5f5f5;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  cursor: not-allowed;
+}
+
+.custom-select-container.disabled .custom-input-label {
+  color: rgba(0, 0, 0, 0.38);
 }
