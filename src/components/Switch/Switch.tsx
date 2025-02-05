@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Switch.module.css";
 
 export interface SwitchProps {
@@ -8,32 +8,48 @@ export interface SwitchProps {
 }
 
 const Switch: React.FC<SwitchProps> = ({
-  checked = false,
+  checked,
   onChange = () => {},
   disabled = false,
 }) => {
-  const [isChecked, setIsChecked] = useState(checked);
+  const isControlled = checked !== undefined;
+  const [internalChecked, setInternalChecked] = useState(checked ?? false);
+
+  useEffect(() => {
+    if (isControlled) {
+      setInternalChecked(checked);
+    }
+  }, [checked]);
 
   const handleToggle = () => {
     if (disabled) return;
-    setIsChecked((prev) => !prev);
-    onChange(!isChecked);
+    setInternalChecked((prev) => {
+      const newChecked = !prev;
+      onChange(newChecked);
+      return newChecked;
+    });
   };
 
   return (
-    <div
-      className={`${styles.switch} ${isChecked ? styles.checked : ""} ${
+    <label
+      className={`${styles.switch} ${internalChecked ? styles.checked : ""} ${
         disabled ? styles.disabled : ""
       }`}
-      onClick={handleToggle}
       role="switch"
-      aria-checked={isChecked}
+      aria-checked={internalChecked}
       aria-disabled={disabled}
     >
-      <div className={styles.track}>
-        <div className={styles.thumb} />
-      </div>
-    </div>
+      <input
+        type="checkbox"
+        className={styles.input}
+        checked={internalChecked}
+        onChange={handleToggle}
+        disabled={disabled}
+      />
+      <span className={styles.track}>
+        <span className={styles.thumb} />
+      </span>
+    </label>
   );
 };
 

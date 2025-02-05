@@ -6,14 +6,21 @@ jest.mock("./Switch.module.css", () => ({
   switch: "switch",
   checked: "checked",
   disabled: "disabled",
+  input: "input",
   track: "track",
   thumb: "thumb",
 }));
 
 describe("Switch component", () => {
-  test("renders correctly", () => {
+  test("renders without crashing", () => {
     render(<Switch />);
     expect(screen.getByRole("switch")).toBeInTheDocument();
+  });
+
+  test("initial state is unchecked", () => {
+    render(<Switch />);
+    const input = screen.getByRole("switch");
+    expect(input).toHaveAttribute("aria-checked", "false");
   });
 
   test("toggles state on click and calls onChange", () => {
@@ -21,34 +28,41 @@ describe("Switch component", () => {
     render(<Switch onChange={handleChange} />);
 
     const switchElement = screen.getByRole("switch");
-    fireEvent.click(switchElement);
 
-    expect(handleChange).toHaveBeenCalledWith(true);
     fireEvent.click(switchElement);
+    expect(switchElement).toHaveAttribute("aria-checked", "true");
+    expect(handleChange).toHaveBeenCalledWith(true);
+
+    fireEvent.click(switchElement);
+    expect(switchElement).toHaveAttribute("aria-checked", "false");
     expect(handleChange).toHaveBeenCalledWith(false);
+    expect(handleChange).toHaveBeenCalledTimes(2);
   });
 
   test("does not toggle when disabled", () => {
     const handleChange = jest.fn();
-    render(<Switch disabled onChange={handleChange} />);
+    render(<Switch onChange={handleChange} disabled />);
 
     const switchElement = screen.getByRole("switch");
-    fireEvent.click(switchElement);
 
+    expect(switchElement).toHaveAttribute("aria-disabled", "true");
+
+    fireEvent.click(switchElement);
+    expect(switchElement).toHaveAttribute("aria-checked", "false");
     expect(handleChange).not.toHaveBeenCalled();
   });
 
-  test("applies correct classes", () => {
+  test("applies correct classes based on state", () => {
     const { container, rerender } = render(<Switch />);
-    const switchDiv = container.querySelector("div");
+    const switchElement = container.querySelector("label");
 
-    expect(switchDiv).toHaveClass("switch");
-    expect(switchDiv).not.toHaveClass("checked");
+    expect(switchElement).toHaveClass("switch");
+    expect(switchElement).not.toHaveClass("checked");
 
-    rerender(<Switch checked />);
-    expect(switchDiv).toHaveClass("checked");
+    fireEvent.click(switchElement!);
+    expect(switchElement).toHaveClass("checked");
 
     rerender(<Switch disabled />);
-    expect(switchDiv).toHaveClass("disabled");
+    expect(switchElement).toHaveClass("disabled");
   });
 });
