@@ -5,10 +5,10 @@
 
   --font-color-prime: #1976d2;
   --error-color: #d32f2f;
-  --font-color-disabled: rgba(0, 0, 0, 0.38); /* ✅ Исправлено */
+  --font-color-disabled: rgba(0, 0, 0, 0.38);
 
   --background-color-prime: #1976d2;
-  --background-color-prime-hover: #1565c0; /* ✅ Исправлено */
+  --background-color-prime-hover: #1565c0;
   --background-color-text-hover: #f7fafc;
   --background-color-contained-disabled: rgba(0, 0, 0, 0.12);
 
