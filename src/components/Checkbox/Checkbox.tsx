@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Checkbox.module.css";
 
 export interface CheckboxProps {
+  checked?: boolean;
+  defaultChecked?: boolean;
   disabled?: boolean;
   onChange?: (checked: boolean) => void;
   label?: React.ReactNode;
@@ -9,29 +11,40 @@ export interface CheckboxProps {
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({
+  checked,
+  defaultChecked = false,
   disabled = false,
   onChange = () => {},
   label = "Checkbox",
   id = "idCbx",
 }) => {
-  const [isChecked, setIsChecked] = useState(false);
+  const isControlled = checked !== undefined;
+  const [internalChecked, setInternalChecked] = useState(defaultChecked);
 
-  const handleChange = () => {
+  useEffect(() => {
+    if (isControlled) {
+      setInternalChecked(checked);
+    }
+  }, [checked]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (disabled) return;
-    setIsChecked((prev) => !prev);
-    onChange(!isChecked);
+
+    const newChecked = event.target.checked;
+
+    if (!isControlled) {
+      setInternalChecked(newChecked);
+    }
+
+    onChange(newChecked);
   };
 
-  const wrapperClasses = [
-    styles.wrapper,
-    isChecked ? styles.checked : "",
-    disabled ? styles.disabled : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const isChecked = isControlled ? checked : internalChecked;
 
   return (
-    <div className={wrapperClasses} onClick={handleChange}>
+    <div
+      className={`${styles.wrapper} ${isChecked ? styles.checked : ""} ${disabled ? styles.disabled : ""}`}
+    >
       <input
         className={styles.input}
         id={id}
