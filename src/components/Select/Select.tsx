@@ -16,7 +16,7 @@ interface SelectProps {
   disabled?: boolean;
 }
 
-const CustomSelect: React.FC<SelectProps> = ({
+const Select: React.FC<SelectProps> = ({
   label,
   options = [],
   value: controlledValue,
@@ -32,6 +32,7 @@ const CustomSelect: React.FC<SelectProps> = ({
   });
 
   const isControlled = controlledValue !== undefined;
+
   const [selectedValue, setSelectedValue] = useState<string | number>(
     controlledValue ?? "",
   );
@@ -40,10 +41,10 @@ const CustomSelect: React.FC<SelectProps> = ({
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (isControlled) {
-      setSelectedValue(controlledValue ?? "");
+    if (isControlled && controlledValue !== undefined) {
+      setSelectedValue(controlledValue);
     }
-  }, [controlledValue]);
+  }, [controlledValue, isControlled]);
 
   const toggleOpen = () => {
     if (disabled) return;
@@ -62,7 +63,9 @@ const CustomSelect: React.FC<SelectProps> = ({
     if (!isControlled) {
       setSelectedValue(optionValue);
     }
-    onChange?.(optionValue);
+    if (optionValue !== selectedValue) {
+      onChange?.(optionValue);
+    }
     setOpen(false);
   };
 
@@ -84,9 +87,10 @@ const CustomSelect: React.FC<SelectProps> = ({
 
   return (
     <div
-      className={`${styles["custom-select-container"]} ${
-        disabled ? styles.disabled : ""
-      } ${error ? styles.error : ""}`}
+      className={`${styles["custom-select-container"]} 
+    ${open ? styles.open : ""} 
+    ${disabled ? styles.disabled : ""} 
+    ${error ? styles.error : ""}`}
       ref={wrapperRef}
     >
       <div
@@ -142,4 +146,4 @@ const CustomSelect: React.FC<SelectProps> = ({
   );
 };
 
-export default CustomSelect;
+export default Select;
