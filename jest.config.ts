@@ -4,5 +4,6 @@ export default {
   setupFilesAfterEnv: ["@testing-library/jest-dom"],
   moduleNameMapper: {
     "\\.(css|less|sass|scss)$": "identity-obj-proxy",
+    "^(.*)\\.js$": "$1",
   },
 };
