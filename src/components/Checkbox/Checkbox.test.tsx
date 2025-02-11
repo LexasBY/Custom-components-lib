@@ -55,7 +55,7 @@ describe("Checkbox component", () => {
   });
 
   test("applies correct classes based on state", () => {
-    const { container, rerender } = render(<Checkbox label="Checkbox" />);
+    const { rerender } = render(<Checkbox label="Checkbox" />);
     const wrapperDiv = screen.getByLabelText("Checkbox").closest("div");
 
     expect(wrapperDiv).toHaveClass("wrapper");

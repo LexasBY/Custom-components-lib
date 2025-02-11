@@ -25,7 +25,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
     if (isControlled && checked !== undefined) {
       setInternalChecked(checked);
     }
-  }, [checked]);
+  }, [checked, isControlled]);
 
   const isChecked = isControlled ? checked : internalChecked;
 

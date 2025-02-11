@@ -21,7 +21,7 @@ const Switch: React.FC<SwitchProps> = ({
     if (isControlled) {
       setInternalChecked(checked);
     }
-  }, [checked]);
+  }, [checked, isControlled]);
 
   const handleToggle = () => {
     if (disabled) return;
