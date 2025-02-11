@@ -25,22 +25,18 @@ describe("Checkbox component", () => {
 
   test("toggles state on click and calls onChange with new value", () => {
     const handleChange = jest.fn();
-    const { container } = render(
-      <Checkbox label="Checkbox" onChange={handleChange} />,
-    );
-
-    const wrapperDiv = container.querySelector("div");
+    render(<Checkbox label="Checkbox" onChange={handleChange} />);
 
     const input = screen.getByRole("checkbox");
 
     expect(input).not.toBeChecked();
 
-    fireEvent.click(wrapperDiv!);
+    fireEvent.click(screen.getByLabelText("Checkbox"));
 
     expect(input).toBeChecked();
     expect(handleChange).toHaveBeenCalledWith(true);
 
-    fireEvent.click(wrapperDiv!);
+    fireEvent.click(screen.getByLabelText("Checkbox"));
     expect(input).not.toBeChecked();
     expect(handleChange).toHaveBeenCalledWith(false);
     expect(handleChange).toHaveBeenCalledTimes(2);
@@ -48,32 +44,27 @@ describe("Checkbox component", () => {
 
   test("does not toggle state when disabled", () => {
     const handleChange = jest.fn();
-    const { container } = render(
-      <Checkbox label="Checkbox" onChange={handleChange} disabled />,
-    );
+    render(<Checkbox label="Checkbox" onChange={handleChange} disabled />);
 
     const input = screen.getByRole("checkbox");
-    const wrapperDiv = container.querySelector("div");
-
     expect(input).toBeDisabled();
 
-    fireEvent.click(wrapperDiv!);
+    fireEvent.click(screen.getByLabelText("Checkbox"));
     expect(input).not.toBeChecked();
     expect(handleChange).not.toHaveBeenCalled();
   });
 
   test("applies correct classes based on state", () => {
     const { container, rerender } = render(<Checkbox label="Checkbox" />);
-    const wrapperDiv = container.querySelector("div");
+    const wrapperDiv = screen.getByLabelText("Checkbox").closest("div");
 
     expect(wrapperDiv).toHaveClass("wrapper");
     expect(wrapperDiv).not.toHaveClass("checked");
 
-    fireEvent.click(wrapperDiv!);
+    fireEvent.click(screen.getByLabelText("Checkbox"));
     expect(wrapperDiv).toHaveClass("checked");
 
     rerender(<Checkbox label="Checkbox" disabled />);
-    const disabledWrapper = container.querySelector("div");
-    expect(disabledWrapper).toHaveClass("disabled");
+    expect(wrapperDiv).toHaveClass("disabled");
   });
 });
