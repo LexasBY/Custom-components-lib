@@ -12,22 +12,37 @@ export interface ButtonProps {
   children?: ReactNode;
 }
 
-function Button<T>({
+const Button: React.FC<ButtonProps> = ({
   variant = "text",
   size = "medium",
   disabled = false,
-  onClick = () => {},
+  onClick,
   children,
-}: ButtonProps) {
+}) => {
+  const classNames = [
+    styles.myButton,
+    styles[variant],
+    styles[size],
+    disabled ? styles.disabled : "",
+  ].join(" ");
+
+  const handleClick = () => {
+    if (!disabled) {
+      onClick?.();
+    }
+  };
+
   return (
     <button
-      className={`${styles.myButton} ${styles[variant]} ${styles[size]} ${disabled ? styles.disabled : ""}`}
-      onClick={onClick}
+      type="button"
+      className={classNames}
+      onClick={handleClick}
       disabled={disabled}
+      aria-disabled={disabled}
     >
       {children}
     </button>
   );
-}
+};
 
 export default Button;

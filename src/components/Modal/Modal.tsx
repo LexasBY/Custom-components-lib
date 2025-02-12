@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import styles from "./Modal.module.css";
 
@@ -15,12 +15,15 @@ const Modal: React.FC<ModalProps> = ({
   children,
   variant = "default",
 }) => {
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose?.();
+    },
+    [onClose],
+  );
+
   useEffect(() => {
     if (!open) return;
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose?.();
-    };
 
     document.addEventListener("keydown", handleKeyDown);
     document.body.style.overflow = "hidden";
@@ -29,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "auto";
     };
-  }, [open, onClose]);
+  }, [open, handleKeyDown]);
 
   if (!open) return null;
 
@@ -39,14 +42,13 @@ const Modal: React.FC<ModalProps> = ({
         className={styles.background}
         data-testid="background"
         aria-hidden
-        onClick={onClose}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) {
+            onClose?.();
+          }
+        }}
       />
-      <div
-        className={`${styles.window} ${styles[variant]}`}
-        role="dialog"
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-      >
+      <div className={`${styles.window} ${styles[variant]}`} role="dialog">
         {children}
       </div>
     </div>,

@@ -13,13 +13,15 @@ const Switch: React.FC<SwitchProps> = ({
   disabled = false,
 }) => {
   const isControlled = checked !== undefined;
-  const [internalChecked, setInternalChecked] = useState(checked ?? false);
+  const [internalChecked, setInternalChecked] = useState(
+    isControlled ? checked : false,
+  );
 
   useEffect(() => {
     if (isControlled) {
       setInternalChecked(checked);
     }
-  }, [checked]);
+  }, [checked, isControlled]);
 
   const handleToggle = () => {
     if (disabled) return;

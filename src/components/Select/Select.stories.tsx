@@ -31,7 +31,6 @@ export const Default: Story = {
     label: "Age",
     options,
     value: "",
-    onChange: (val) => console.log("Selected value:", val),
   },
   render: (args) => {
     const [selectedValue, setSelectedValue] = useState(args.value);
@@ -40,10 +39,7 @@ export const Default: Story = {
       <CustomSelect
         {...args}
         value={selectedValue}
-        onChange={(value) => {
-          console.log("Selected value:", value);
-          setSelectedValue(value);
-        }}
+        onChange={setSelectedValue}
       />
     );
   },

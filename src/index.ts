@@ -1,4 +1,8 @@
 import Button from "./components/Button/Button";
-import TextField from "./components/TextField/TextField";
 import Select from "./components/Select/Select";
-export { Button, TextField, Select };
+import Checkbox from "./components/Checkbox/Checkbox";
+import Modal from "./components/Modal/Modal";
+import Switch from "./components/Switch/Switch";
+import TextField from "./components/TextField/TextField";
+
+export { Button, Select, Checkbox, Modal, Switch, TextField };

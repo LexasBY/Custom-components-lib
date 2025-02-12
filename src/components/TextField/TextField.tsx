@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useState, useEffect } from "react";
 import styles from "./TextField.module.css";
 
 export type Variant = "outlined" | "filled" | "standard";
@@ -29,12 +29,26 @@ const TextField = forwardRef<Ref, TextFieldProps>(
       id,
       onClick,
       onChange,
-      defaultValue,
+      defaultValue = "",
     }: TextFieldProps,
     ref,
   ) => {
-    const [value, setValue] = useState(defaultValue || "");
     const isControlled = selectedValue !== undefined;
+
+    const [value, setValue] = useState(defaultValue);
+
+    useEffect(() => {
+      if (isControlled) {
+        setValue(selectedValue);
+      }
+    }, [selectedValue, isControlled]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!isControlled) {
+        setValue(e.target.value);
+      }
+      onChange?.(e);
+    };
 
     const inputClasses = [styles.input, styles[variant]];
     const labelClasses = [styles.label];
@@ -53,15 +67,8 @@ const TextField = forwardRef<Ref, TextFieldProps>(
             ref={ref}
             style={{ cursor: select ? "pointer" : "text" }}
             className={inputClasses.join(" ")}
-            value={isControlled ? selectedValue : value}
-            onChange={
-              isControlled
-                ? undefined
-                : (e) => {
-                    setValue(e.target.value);
-                    onChange?.(e);
-                  }
-            }
+            value={value}
+            onChange={handleChange}
             type="text"
             id={id}
             placeholder={" "}
@@ -76,5 +83,6 @@ const TextField = forwardRef<Ref, TextFieldProps>(
     );
   },
 );
+TextField.displayName = "TextField";
 
 export default TextField;

@@ -22,10 +22,12 @@ const Checkbox: React.FC<CheckboxProps> = ({
   const [internalChecked, setInternalChecked] = useState(defaultChecked);
 
   useEffect(() => {
-    if (isControlled) {
+    if (isControlled && checked !== undefined) {
       setInternalChecked(checked);
     }
-  }, [checked]);
+  }, [checked, isControlled]);
+
+  const isChecked = isControlled ? checked : internalChecked;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (disabled) return;
@@ -35,11 +37,10 @@ const Checkbox: React.FC<CheckboxProps> = ({
     if (!isControlled) {
       setInternalChecked(newChecked);
     }
-
-    onChange(newChecked);
+    if (onChange && newChecked !== isChecked) {
+      onChange(newChecked);
+    }
   };
-
-  const isChecked = isControlled ? checked : internalChecked;
 
   return (
     <div
