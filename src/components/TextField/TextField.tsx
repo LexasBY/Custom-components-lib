@@ -1,7 +1,6 @@
-import React, { forwardRef, useState, useEffect } from "react";
-import styles from "./TextField.module.css";
-
-export type Variant = "outlined" | "filled" | "standard";
+import React, { forwardRef, useState, useEffect } from 'react';
+import styles from './TextField.module.scss';
+export type Variant = 'outlined' | 'filled' | 'standard';
 
 export interface TextFieldProps {
   variant?: Variant;
@@ -20,18 +19,18 @@ type Ref = HTMLInputElement;
 const TextField = forwardRef<Ref, TextFieldProps>(
   (
     {
-      variant = "outlined",
+      variant = 'outlined',
       error = false,
-      label = "Outlined",
+      label = 'Outlined',
       disabled = false,
       select = false,
       selectedValue,
       id,
       onClick,
       onChange,
-      defaultValue = "",
+      defaultValue = '',
     }: TextFieldProps,
-    ref,
+    ref
   ) => {
     const isControlled = selectedValue !== undefined;
 
@@ -57,32 +56,28 @@ const TextField = forwardRef<Ref, TextFieldProps>(
     if (error) inputClasses.push(styles.error);
 
     return (
-      <div
-        data-testid="text-field"
-        className={styles.container}
-        onClick={onClick}
-      >
+      <div data-testid="text-field" className={styles.container} onClick={onClick}>
         <label htmlFor={id} className={styles.wrapper}>
           <input
             ref={ref}
-            style={{ cursor: select ? "pointer" : "text" }}
-            className={inputClasses.join(" ")}
+            style={{ cursor: select ? 'pointer' : 'text' }}
+            className={inputClasses.join(' ')}
             value={value}
             onChange={handleChange}
             type="text"
             id={id}
-            placeholder={" "}
+            placeholder={' '}
             disabled={disabled}
             data-testid="text-input"
           />
-          <span data-testid="text-label" className={labelClasses.join(" ")}>
+          <span data-testid="text-label" className={labelClasses.join(' ')}>
             {label}
           </span>
         </label>
       </div>
     );
-  },
+  }
 );
-TextField.displayName = "TextField";
+TextField.displayName = 'TextField';
 
 export default TextField;

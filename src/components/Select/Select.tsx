@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
-import ReactDOM from "react-dom";
-import styles from "./Select.module.css";
+import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
+import styles from './Select.module.scss';
 
-interface Option {
+export interface Option {
   value: string | number;
   label: string;
 }
 
-interface SelectProps {
+export interface SelectProps {
   label?: string;
   options: Option[];
   value?: string | number;
@@ -33,9 +33,7 @@ const Select: React.FC<SelectProps> = ({
 
   const isControlled = controlledValue !== undefined;
 
-  const [selectedValue, setSelectedValue] = useState<string | number>(
-    controlledValue ?? "",
-  );
+  const [selectedValue, setSelectedValue] = useState<string | number>(controlledValue ?? '');
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -81,58 +79,56 @@ const Select: React.FC<SelectProps> = ({
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   return (
     <div
-      className={`${styles["custom-select-container"]} 
-    ${open ? styles.open : ""} 
-    ${disabled ? styles.disabled : ""} 
-    ${error ? styles.error : ""}`}
+      className={`${styles['custom-select-container']} 
+    ${open ? styles.open : ''} 
+    ${disabled ? styles.disabled : ''} 
+    ${error ? styles.error : ''}`}
       ref={wrapperRef}
     >
       <div
-        className={`${styles["custom-select-control"]} 
-          ${open ? styles.active : ""} 
-          ${disabled ? styles.disabled : ""} 
-          ${error ? styles.error : ""}`}
+        className={`${styles['custom-select-control']} 
+          ${open ? styles.active : ''} 
+          ${disabled ? styles.disabled : ''} 
+          ${error ? styles.error : ''}`}
         onClick={toggleOpen}
         tabIndex={disabled ? -1 : 0}
         aria-disabled={disabled}
       >
         <span
-          className={`${styles["custom-input-label"]} ${
-            open || selectedValue !== "" ? styles.selected : ""
+          className={`${styles['custom-input-label']} ${
+            open || selectedValue !== '' ? styles.selected : ''
           }`}
         >
           {label}
         </span>
-        <span className={styles["custom-select-value"]}>
-          {selectedValue !== ""
-            ? options.find((o) => o.value === selectedValue)?.label
-            : ""}
+        <span className={styles['custom-select-value']}>
+          {selectedValue !== '' ? options.find((o) => o.value === selectedValue)?.label : ''}
         </span>
-        <span className={styles["custom-select-arrow"]}>▾</span>
+        <span className={styles['custom-select-arrow']}>▾</span>
       </div>
       {open &&
         ReactDOM.createPortal(
           <div
             ref={menuRef}
-            className={styles["custom-select-menu"]}
+            className={styles['custom-select-menu']}
             style={{
               top: `${menuPosition.top}px`,
               left: `${menuPosition.left}px`,
               width: `${menuPosition.width}px`,
-              position: "absolute",
+              position: 'absolute',
             }}
           >
             {options.map((option) => (
               <div
                 key={option.value}
-                className={`${styles["custom-menu-item"]} ${
-                  selectedValue === option.value ? styles.selected : ""
+                className={`${styles['custom-menu-item']} ${
+                  selectedValue === option.value ? styles.selected : ''
                 }`}
                 onClick={() => handleOptionClick(option.value)}
               >
@@ -140,7 +136,7 @@ const Select: React.FC<SelectProps> = ({
               </div>
             ))}
           </div>,
-          document.body,
+          document.body
         )}
     </div>
   );

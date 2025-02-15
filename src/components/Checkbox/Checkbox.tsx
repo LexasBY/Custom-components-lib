@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import styles from "./Checkbox.module.css";
+import React, { useState, useEffect } from 'react';
+import styles from './Checkbox.module.scss';
 
 export interface CheckboxProps {
   checked?: boolean;
@@ -15,8 +15,8 @@ const Checkbox: React.FC<CheckboxProps> = ({
   defaultChecked = false,
   disabled = false,
   onChange = () => {},
-  label = "Checkbox",
-  id = "idCbx",
+  label = 'Checkbox',
+  id = 'idCbx',
 }) => {
   const isControlled = checked !== undefined;
   const [internalChecked, setInternalChecked] = useState(defaultChecked);
@@ -44,7 +44,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
 
   return (
     <div
-      className={`${styles.wrapper} ${isChecked ? styles.checked : ""} ${disabled ? styles.disabled : ""}`}
+      className={`${styles.wrapper} ${isChecked ? styles.checked : ''} ${disabled ? styles.disabled : ''}`}
     >
       <input
         className={styles.input}

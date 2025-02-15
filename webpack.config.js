@@ -1,68 +1,59 @@
-import path from "path";
-import { fileURLToPath } from "url";
+const path = require('path');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-export default {
-  entry: "./src/index.ts",
+module.exports = {
+  mode: 'production',
+  entry: './src/index.ts',
   output: {
-    filename: "index.js",
-    path: path.resolve(__dirname, "dist"),
-    library: {
-      type: "umd",
-    },
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'index.js',
+    libraryTarget: 'umd',
+    libraryExport: 'default',
     clean: true,
   },
-  mode: "production",
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".json"],
+    extensions: ['.ts', '.tsx'],
   },
   externals: {
-    react: {
-      commonjs: "react",
-      commonjs2: "react",
-      amd: "react",
-      root: "React",
-    },
-    "react-dom": {
-      commonjs: "react-dom",
-      commonjs2: "react-dom",
-      amd: "react-dom",
-      root: "ReactDOM",
-    },
+    react: 'react',
   },
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
-        use: "ts-loader",
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                namedExport: false,
+                exportLocalsConvention: 'as-is',
+              },
+              sourceMap: true,
+              importLoaders: 1,
+            },
+          },
+          'sass-loader',
+        ],
         exclude: /node_modules/,
       },
       {
-        test: /\.module\.css$/,
-        use: [
-          "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              modules: {
-                auto: true,
-                localIdentName: "[name]__[local]--[hash:base64:5]",
-              },
-            },
-          },
-        ],
+        test: /\.(ts|tsx)?$/,
+        use: ['ts-loader'],
+        exclude: /node_modules/,
       },
       {
-        test: /\.css$/,
-        exclude: /\.module\.css$/,
-        use: ["style-loader", "css-loader"],
-      },
-      {
-        test: /\.svg$/,
-        use: ["@svgr/webpack"],
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: ['@svgr/webpack'],
       },
     ],
+  },
+
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    open: true,
   },
 };

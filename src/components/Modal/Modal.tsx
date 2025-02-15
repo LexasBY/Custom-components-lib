@@ -1,36 +1,31 @@
-import React, { useEffect, useCallback } from "react";
-import { createPortal } from "react-dom";
-import styles from "./Modal.module.css";
+import React, { useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
+import styles from './Modal.module.scss';
 
 export interface ModalProps {
   open: boolean;
   onClose?: () => void;
   children?: React.ReactNode;
-  variant?: "default" | "error";
+  variant?: 'default' | 'error';
 }
 
-const Modal: React.FC<ModalProps> = ({
-  open,
-  onClose,
-  children,
-  variant = "default",
-}) => {
+const Modal: React.FC<ModalProps> = ({ open, onClose, children, variant = 'default' }) => {
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose?.();
+      if (event.key === 'Escape') onClose?.();
     },
-    [onClose],
+    [onClose]
   );
 
   useEffect(() => {
     if (!open) return;
 
-    document.addEventListener("keydown", handleKeyDown);
-    document.body.style.overflow = "hidden";
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "auto";
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'auto';
     };
   }, [open, handleKeyDown]);
 
@@ -52,7 +47,7 @@ const Modal: React.FC<ModalProps> = ({
         {children}
       </div>
     </div>,
-    document.body,
+    document.body
   );
 };
 

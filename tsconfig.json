@@ -1,17 +1,52 @@
 {
   "compilerOptions": {
-    "types": ["@testing-library/jest-dom"],
-    "target": "es6",
-    "module": "commonjs",
-    "noImplicitAny": true,
-    "removeComments": true,
-    "jsx": "react",
-    "strict": true,
-    "esModuleInterop": true,
+    "strict": false,
     "outDir": "./dist/",
     "sourceMap": true,
-    "declaration": true
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "ES2020",
+    "jsx": "react",
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": ["jest", "@testing-library/jest-dom"],
+    "declaration": true,
+    "allowJs": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules/*", "dist", "./src/stories"],
+  "include": [
+    "src/**/*",
+    "webpack.config.ts",
+    ".eslintrc.js",
+    "./declarations.d.ts",
+    "jest.config.js"
+  ]
 }
+
+// {
+//   "compilerOptions": {
+//     "module": "CommonJS",
+//     "target": "es5",
+//     "jsx": "react",
+//     "strict": true,
+//     "lib": ["esnext", "dom"],
+//     "esModuleInterop": true,
+//     "outDir": "./dist/",
+//     "sourceMap": true,
+//     "declaration": true,
+//     "types": ["jest", "@testing-library/jest-dom"]
+//   },
+//   "include": ["src", "global.d.ts"],
+//   "exclude": [
+//     "node_modules",
+//     "dist",
+//     "src/stories",
+//     "**/*.stories.ts",
+//     "**/*.stories.tsx",
+//     "**/*.test.ts",
+//     "**/*.test.tsx"
+//   ]
+// }

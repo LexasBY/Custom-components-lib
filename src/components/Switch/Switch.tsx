@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import styles from "./Switch.module.css";
+import React, { useState, useEffect } from 'react';
+import styles from './Switch.module.scss';
 
 export interface SwitchProps {
   checked?: boolean;
@@ -7,15 +7,9 @@ export interface SwitchProps {
   disabled?: boolean;
 }
 
-const Switch: React.FC<SwitchProps> = ({
-  checked,
-  onChange = () => {},
-  disabled = false,
-}) => {
+const Switch: React.FC<SwitchProps> = ({ checked, onChange = () => {}, disabled = false }) => {
   const isControlled = checked !== undefined;
-  const [internalChecked, setInternalChecked] = useState(
-    isControlled ? checked : false,
-  );
+  const [internalChecked, setInternalChecked] = useState(isControlled ? checked : false);
 
   useEffect(() => {
     if (isControlled) {
@@ -34,8 +28,8 @@ const Switch: React.FC<SwitchProps> = ({
 
   return (
     <label
-      className={`${styles.switch} ${internalChecked ? styles.checked : ""} ${
-        disabled ? styles.disabled : ""
+      className={`${styles.switch} ${internalChecked ? styles.checked : ''} ${
+        disabled ? styles.disabled : ''
       }`}
       role="switch"
       aria-checked={internalChecked}
