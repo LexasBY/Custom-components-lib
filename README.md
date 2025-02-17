@@ -7,7 +7,7 @@
 ## 📦 Installation
 
 ```sh
-npm install @lexasby/custom-components-lib
+npm i @lexasby/custom-components-lib
 ```
 
 ## 🚀 Usage
@@ -15,21 +15,14 @@ npm install @lexasby/custom-components-lib
 Import and use the components:
 
 ```tsx
-import {
-  Button,
-  Checkbox,
-  Modal,
-  Select,
-  Switch,
-  TextField,
-} from "@lexasby/custom-components-lib";
+import { Button, Checkbox, Modal, Select, Switch, TextField } from '@lexasby/custom-components-lib';
 
 function App() {
   return (
     <>
       <Button variant="contained">Click me</Button>
       <Checkbox label="Accept terms" />
-      <Select options={["Option 1", "Option 2"]} />
+      <Select options={['Option 1', 'Option 2']} />
       <TextField placeholder="Enter text" />
       <Switch checked={true} />
       <Modal open={true} onClose={() => {}}>

@@ -1,6 +1,6 @@
 {
-  "name": "custom-components-lib_innowise_task",
-  "version": "1.0.52",
+  "name": "@lexasby/custom-components-lib",
+  "version": "1.1.1",
   "main": "./dist/index.js",
   "files": [
     "dist/*"
