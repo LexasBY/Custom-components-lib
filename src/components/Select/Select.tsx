@@ -85,38 +85,38 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <div
-      className={`${styles['custom-select-container']} 
+      className={`${styles.customSelectContainer} 
     ${open ? styles.open : ''} 
     ${disabled ? styles.disabled : ''} 
     ${error ? styles.error : ''}`}
       ref={wrapperRef}
     >
       <div
-        className={`${styles['custom-select-control']} 
-          ${open ? styles.active : ''} 
-          ${disabled ? styles.disabled : ''} 
-          ${error ? styles.error : ''}`}
+        className={`${styles.customSelectControl} 
+        ${open ? styles.active : ''} 
+        ${disabled ? styles.disabled : ''} 
+        ${error ? styles.error : ''}`}
         onClick={toggleOpen}
         tabIndex={disabled ? -1 : 0}
         aria-disabled={disabled}
       >
         <span
-          className={`${styles['custom-input-label']} ${
+          className={`${styles.customInputLabel} ${
             open || selectedValue !== '' ? styles.selected : ''
           }`}
         >
           {label}
         </span>
-        <span className={styles['custom-select-value']}>
+        <span className={styles.customSelectValue}>
           {selectedValue !== '' ? options.find((o) => o.value === selectedValue)?.label : ''}
         </span>
-        <span className={styles['custom-select-arrow']}>▾</span>
+        <span className={styles.customSelectArrow}>▾</span>
       </div>
       {open &&
         ReactDOM.createPortal(
           <div
             ref={menuRef}
-            className={styles['custom-select-menu']}
+            className={styles.customSelectMenu}
             style={{
               top: `${menuPosition.top}px`,
               left: `${menuPosition.left}px`,
@@ -127,7 +127,7 @@ const Select: React.FC<SelectProps> = ({
             {options.map((option) => (
               <div
                 key={option.value}
-                className={`${styles['custom-menu-item']} ${
+                className={`${styles.customMenuItem} ${
                   selectedValue === option.value ? styles.selected : ''
                 }`}
                 onClick={() => handleOptionClick(option.value)}

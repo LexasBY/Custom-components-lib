@@ -1,31 +1,31 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
-import Button from "./Button";
-import React from "react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
+import Button from './Button';
+import React from 'react';
 
 const meta = {
-  title: "Components/Button",
+  title: 'Components/Button',
   component: Button,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
     onClick: fn(),
-    size: "medium",
-    variant: "outlined",
+    size: 'medium',
+    variant: 'outlined',
   },
   argTypes: {
-    size: { control: "radio", options: ["small", "medium", "large"] },
-    variant: { control: "radio", options: ["text", "contained", "outlined"] },
-    children: { control: "text" },
+    size: { control: 'radio', options: ['small', 'medium', 'large'] },
+    variant: { control: 'radio', options: ['text', 'contained', 'outlined'] },
+    children: { control: 'text' },
   },
   decorators: [
     (Story, context) => {
       const { size, children } = context.args;
-      const computedSize = size ?? "medium";
+      const computedSize = size ?? 'medium';
       const computedChildren =
-        !children || (typeof children === "string" && children.trim() === "")
+        !children || (typeof children === 'string' && children.trim() === '')
           ? computedSize.toUpperCase()
           : children;
 
@@ -39,21 +39,21 @@ type Story = StoryObj<typeof meta>;
 
 export const Large: Story = {
   args: {
-    size: "large",
-    variant: "outlined",
+    size: 'large',
+    variant: 'outlined',
   },
 };
 
 export const Medium: Story = {
   args: {
-    size: "medium",
-    variant: "outlined",
+    size: 'medium',
+    variant: 'outlined',
   },
 };
 
 export const Small: Story = {
   args: {
-    size: "small",
-    variant: "outlined",
+    size: 'small',
+    variant: 'outlined',
   },
 };
